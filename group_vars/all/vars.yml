@@ -1,0 +1,32 @@
+# ==========================================
+# global
+# ==========================================
+local: /data
+remote: /opt/odoo/customaddons
+openerp-server: /etc/odoo
+batch: trunk
+
+# ==========================================
+# sit2 config
+# ==========================================
+sit2_info: sit2
+
+# ==========================================
+# uat2 config
+# ==========================================
+uat2_info: uat2
+
+
+
+
+
+# ==========================================
+# put your files to be deploy here
+# ==========================================
+# example: 
+# files:
+#   - /vb_acctmgmt/views/views_acctmgmt.xml
+#   - /vb_acctmgmt/wizards/common_wizard.py
+
+files:
+  - /vb_trade/views/views_trade.xml

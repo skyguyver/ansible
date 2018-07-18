@@ -1,0 +1,22 @@
+# STEPS:
+#   1. update svn 
+#   2. compress
+
+
+
+# 1. update svn
+- name: Update trunk svn
+  subversion:
+    repo: svn://172.18.6.8/repo2/trunk
+    dest: "{{local}}/trunk"
+    checkout: no
+    update: yes
+
+
+# 2. compress
+- name: Create a zip archive of /data/trunk
+  archive:
+    path:
+      - "{{local}}/trunk"
+    dest: "{{local}}/trunk.zip"
+    format: zip

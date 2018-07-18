@@ -1,0 +1,18 @@
+- hosts: localhost
+  roles:
+    - local
+
+- hosts: sit2
+  become: true
+  gather_facts: true
+  roles:
+    - full-build-sit2
+    - sit2
+
+- hosts: sit2
+  become: true
+  gather_facts: true
+  roles:
+    - full-build-uat2
+    - uat2
+      

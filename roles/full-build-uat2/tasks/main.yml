@@ -1,0 +1,48 @@
+# STEPS:
+#   1. stop odoo service
+#   2. backup existing code
+#   3. copy and extract new code
+#   4. start odoo service
+#   5. save to db for audit
+
+
+# 1. stop odoo
+- name: Stop odoo service {{ uat2_info }}
+  systemd:
+    name: odoo
+    state: stopped
+
+
+# 2. backup existing code
+- name: Setting backup_name variable
+  set_fact: 
+    backup_name: "{{ansible_date_time.year}}{{ansible_date_time.month}}{{ansible_date_time.day}}_{{ansible_date_time.hour}}{{ansible_date_time.minute}}{{ansible_date_time.second}}"
+
+- name: Rename trunk directory to current build
+  command: mv /opt/odoo/customaddons/trunk /opt/odoo/customaddons/{{backup_name}}
+
+
+# 3. copy and extract new code
+- name: Copy and extract trunk.zip
+  unarchive:
+    src: /data/trunk.zip
+    dest: /opt/odoo/customaddons
+
+
+# 4. start odoo service
+- name: Start odoo service {{ uat2_info }}
+  systemd:
+    name: odoo
+    state: started
+
+
+# 5. save to db for audit
+- name: Save to mongodb
+  local_action: command mongo vbroker --host 172.18.6.164 --port 27017 --eval "db.deploy_log.save({date_created:'{{ansible_date_time.date}}',
+                                                                                              time_created:'{{ansible_date_time.time}}',
+                                                                                              server:'{{uat2_info}}',
+                                                                                              server_ip:'{{ansible_default_ipv4.address}}',
+                                                                                              mode:'full-build-uat2 deployment',
+                                                                                              backup_name:'{{backup_name}}',
+                                                                                              success:'yes'
+                                                                                             })"

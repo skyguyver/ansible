@@ -1,0 +1,29 @@
+# STEPS:
+#   1. deploy codes
+#   2. restart odoo service
+
+# 1. deploy codes
+- name: Transfer files to {{ uat2_info }}
+  template:
+    src: "{{local}}{{item}}"
+    dest: "{{remote}}{{item}}"
+  with_items: "{{ files }}"
+  # register: result
+
+
+# 2. restart odoo service
+- name: Restart odoo service {{ uat2_info }}
+  systemd:
+    name: odoo
+    state: restarted
+
+
+- name: Save to mongodb
+  local_action: command mongo vbroker --host 172.18.6.164 --port 27017 --eval "db.deploy_log.save({date_created:'{{ansible_date_time.date}}',
+                                                                                                  time_created:'{{ansible_date_time.time}}',
+                                                                                                  server:'{{uat2_info}}',
+                                                                                                  server_ip:'{{ansible_default_ipv4.address}}',
+                                                                                                  mode:'adhoc uat deployment',
+                                                                                                  files:'{{files|list|to_json}}',
+                                                                                                  success:'yes'
+                                                                                                 })"
