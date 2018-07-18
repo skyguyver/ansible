@@ -1,6 +1,6 @@
 - hosts: localhost
   roles:
-    - local
+#    - local
 
 - hosts: sit2
   become: true
