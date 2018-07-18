@@ -1,0 +1,9 @@
+- hosts: localhost
+  roles:
+    - local
+
+- hosts: uat2
+  become: true
+  gather_facts: true
+  roles:
+    - full-build-uat2

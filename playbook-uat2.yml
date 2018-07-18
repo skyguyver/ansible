@@ -1,0 +1,10 @@
+- hosts: localhost
+  roles:
+    - local
+
+- hosts: uat2
+  become: true
+  gather_facts: true
+  roles:
+    - uat2
+      
