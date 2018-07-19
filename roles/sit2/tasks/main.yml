@@ -5,8 +5,8 @@
 # 1. deploy codes
 - name: Transfer files to {{ sit2_info }}
   template:
-    src: "{{local}}/trunk{{item}}"
-    dest: "{{remote}}/{{batch}}{{item}}"
+    src: "{{local}}{{item}}"
+    dest: "{{remote}}{{item}}"
   with_items: "{{ files }}"
   # register: result
 

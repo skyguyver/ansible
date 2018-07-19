@@ -29,4 +29,4 @@ uat2_info: uat2
 #   - /vb_acctmgmt/wizards/common_wizard.py
 
 files:
-  - /vb_trade/views/views_trade.xml
+  - /trunk/vb_bankrecon/wizards/common_wizard.py
