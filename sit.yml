@@ -1,0 +1,10 @@
+- hosts: localhost
+  roles:
+#    - local
+
+- hosts: sit
+  become: true
+  gather_facts: true
+  roles:
+#    - full-build-sit2
+    - sit
