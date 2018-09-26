@@ -5,27 +5,25 @@
 
 
 # 1. deploy codes
-- name: Transfer files to {{ sit2_info }}
+- name: Transfer files to sit3
   template:
     src: "{{local}}{{item}}"
-    dest: "{{remote}}{{item}}"
+    dest: "{{remote_docker}}{{item}}"
   with_items: "{{ files }}"
   # register: result
 
 
 # 2. restart odoo service
-- name: Restart odoo service {{ sit2_info }}
-  systemd:
-    name: odoo
-    state: restarted
+- name: Restart odoo service sit3
+  command: docker restart cb0
   # when: result.changed
 
 - name: Save to mongodb
   local_action: command mongo vbroker --host 172.18.6.164 --port 27017 --eval "db.deploy_log.save({date_created:'{{ansible_date_time.date}}',
                                                                                               time_created:'{{ansible_date_time.time}}',
-                                                                                              server:'{{sit2_info}}',
+                                                                                              server:'{{uat1_info}}',
                                                                                               server_ip:'{{ansible_default_ipv4.address}}',
-                                                                                              mode:'adhoc sit2 deployment',
+                                                                                              mode:'adhoc sit3 deployment',
                                                                                               files:'{{files|list|to_json}}',
                                                                                               success:'yes'
                                                                                              })"

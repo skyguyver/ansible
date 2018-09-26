@@ -3,6 +3,7 @@
 # ==========================================
 local: /data
 remote: /opt/odoo/customaddons
+remote_docker: /opt/docker/odoo-sit3/customaddons
 openerp-server: /etc/odoo
 batch: trunk
 
@@ -14,8 +15,8 @@ sit2_info: sit2
 # ==========================================
 # uat2 config
 # ==========================================
+uat1_info: uat1
 uat2_info: uat2
-
 
 
 
@@ -29,4 +30,4 @@ uat2_info: uat2
 #   - /vb_acctmgmt/wizards/common_wizard.py
 
 files:
-  - /trunk/vb_bankrecon/wizards/common_wizard.py
+  - /trunk/vb_acctmgmt/views/menus_acctmgmt.xml

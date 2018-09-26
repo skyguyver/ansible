@@ -1,6 +1,7 @@
 - hosts: localhost
+  become: true
   roles:
-#    - local
+    - local
 
 - hosts: sit2
   become: true

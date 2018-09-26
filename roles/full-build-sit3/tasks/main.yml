@@ -1,0 +1,16 @@
+
+# 2. backup existing code
+- name: Setting backup_name variable
+  set_fact: 
+    backup_name: "{{ansible_date_time.year}}{{ansible_date_time.month}}{{ansible_date_time.day}}_{{ansible_date_time.hour}}{{ansible_date_time.minute}}{{ansible_date_time.second}}"
+
+- name: Rename trunk directory to current build
+  command: mv /opt/docker/odoo-sit3/customaddons/trunk /opt/docker/odoo-sit3/customaddons/{{backup_name}}
+
+
+# 3. copy and extract new code
+- name: Copy and extract trunk.zip
+  unarchive:
+    src: "{{local}}/trunk.zip"
+    dest: /opt/docker/odoo-sit3/customaddons
+

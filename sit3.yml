@@ -1,0 +1,7 @@
+- hosts: uat1 
+  become: true
+  gather_facts: true
+  roles:
+#    - full-build-sit3
+    - sit3
+      
